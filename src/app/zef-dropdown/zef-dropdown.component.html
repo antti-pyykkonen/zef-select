@@ -1,0 +1,4 @@
+<div class="zef-dropdown-container" [class.z-disabled]="disabled" fxLayout="row" (click)="onOpenDropdown()">
+  <div class="z-dropdown-placeholder" [class.z-no-selection]="!selected" fxFlex>{{ selected?.name || placeholder }}</div>
+  <div class="z-dropdown-caret">▾</div>
+</div>

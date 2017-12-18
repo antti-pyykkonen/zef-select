@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+.zef-dropdown-container {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+
+  //height: 40px;
+  border-radius: 3px;
+  background-color: #DAE2E5;
+
+  padding: 9px 16px;
+  color: #112539;
+
+  cursor: pointer;
+
+  .z-dropdown-placeholder {
+    &.z-no-selection {
+      opacity: 0.5;
+    }
+  }
+
+  .z-dropdown-caret {
+    color: #35485A;
+  }
+
+
+  &.z-disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
