@@ -2,7 +2,7 @@ import { PlayerOverlay } from './../player-overlay.service';
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 
 export interface ZefDropdownItem {
-  id: string;
+  value: string;
   name: string;
 }
 
@@ -12,12 +12,16 @@ export interface ZefDropdownItem {
   styleUrls: ['./zef-dropdown.component.scss']
 })
 export class ZefDropdown implements OnInit {
+  public selectedId: any;
+
   public dropdownRef: any;
   public selected: ZefDropdownItem;
 
   @Input() items: ZefDropdownItem[];
+
   @Input() placeholder: string = 'Select an item';
   @Input() disabled: boolean = false;
+
   isMenuOpen = false;
 
   @ViewChild('elem')
@@ -37,6 +41,24 @@ export class ZefDropdown implements OnInit {
       overlayY: 'bottom',
     },
   ];
+
+  public _value;
+
+  @Input() set value(value: string|ZefDropdownItem) {
+    this.selectedId = value;
+
+    if (value instanceof Object) {
+      this._value = value;
+    } else {
+      const item = this.items.find(x => x.value === this._value);
+      this._value = item;
+    }
+  }
+
+  get(): ZefDropdownItem {
+    const item = this.items.find(x => x.value === this._value);
+    return item;
+  }
 
 
   constructor(private overlay: PlayerOverlay) { }

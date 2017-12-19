@@ -10,16 +10,16 @@ export class AppComponent {
   isMenuOpen  = false;
 
   public items = [
-    {name: 'A', id: 1},
-    {name: 'B', id: 2},
-    {name: 'C', id: 3},
-    {name: 'D', id: 4},
-    {name: 'E', id: 5},
-    {name: 'F', id: 6},
-    {name: 'G', id: 7},
-    {name: 'H', id: 8},
-    {name: 'I', id: 9},
-    {name: 'J', id: 10},
-    {name: 'K', id: 11},
+    {name: 'A', value: 1},
+    {name: 'B', value: 2},
+    {name: 'C', value: 3},
+    {name: 'D', value: 4},
+    {name: 'E', value: 5},
+    {name: 'F', value: 6},
+    {name: 'G', value: 7},
+    {name: 'H', value: 8},
+    {name: 'I', value: 9},
+    {name: 'J', value: 10},
+    {name: 'K', value: 11}
   ];
 }

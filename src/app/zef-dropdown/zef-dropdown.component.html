@@ -3,7 +3,6 @@
   <div class="z-dropdown-caret">▾</div>
 </div>
 
-
 <ng-template cdkConnectedOverlay
 [cdkConnectedOverlayOrigin]="overlayOrigin"
 [cdkConnectedOverlayOpen]="isMenuOpen"
@@ -11,5 +10,5 @@
 [cdkConnectedOverlayHasBackdrop]="true"
 [cdkConnectedOverlayBackdropClass]="'noop'"
 (backdropClick)="isMenuOpen = false">
-  <dropdown-menu [items]="items" [selected] (select)="isMenuOpen = false"></dropdown-menu>
+  <dropdown-menu [items]="items" [selected]="selectedId" (select)="isMenuOpen = false" [selected]="selected"></dropdown-menu>
 </ng-template>
