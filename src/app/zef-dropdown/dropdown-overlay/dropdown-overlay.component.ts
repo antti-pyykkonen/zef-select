@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-dropdown-overlay',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dropdown-overlay.component.scss']
 })
 export class DropdownOverlay implements OnInit {
+  @Input() selected: string;
+  @Input() items: any[];
 
   constructor() { }
 

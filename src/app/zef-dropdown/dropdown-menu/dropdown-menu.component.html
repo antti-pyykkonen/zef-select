@@ -1,0 +1,5 @@
+<div class="zef-dropdown-menu" fxLayout="column">
+    <div class="z-item" *ngFor="let item of items" [class.selected]="selected" (click)="select.emit(item?.id)">
+      <span>{{item?.name}}</span>
+    </div>
+</div>

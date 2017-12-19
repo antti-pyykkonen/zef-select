@@ -1,4 +1,15 @@
-<div class="zef-dropdown-container" [class.z-disabled]="disabled" fxLayout="row" (click)="onOpenDropdown()">
+<div class="zef-dropdown-container" [class.z-disabled]="disabled" fxLayout="row" (click)="isMenuOpen = !isMenuOpen" #overlayOrigin="cdkOverlayOrigin" cdkOverlayOrigin #elem>
   <div class="z-dropdown-placeholder" [class.z-no-selection]="!selected" fxFlex>{{ selected?.name || placeholder }}</div>
   <div class="z-dropdown-caret">▾</div>
 </div>
+
+
+<ng-template cdkConnectedOverlay
+[cdkConnectedOverlayOrigin]="overlayOrigin"
+[cdkConnectedOverlayOpen]="isMenuOpen"
+[cdkConnectedOverlayWidth]="element?.nativeElement?.offsetWidth"
+[cdkConnectedOverlayHasBackdrop]="true"
+[cdkConnectedOverlayBackdropClass]="'noop'"
+(backdropClick)="isMenuOpen = false">
+  <dropdown-menu [items]="items" [selected] (select)="isMenuOpen = false"></dropdown-menu>
+</ng-template>

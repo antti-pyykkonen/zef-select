@@ -1,19 +1,25 @@
 import { DropdownOverlay } from './zef-dropdown/dropdown-overlay/dropdown-overlay.component';
 import { Injectable, ElementRef } from '@angular/core';
-import { Overlay, OriginConnectionPosition, OverlayConnectionPosition, OverlayConfig, ScrollStrategy } from '@angular/cdk/overlay';
+import { Overlay, OriginConnectionPosition, OverlayConnectionPosition,
+  OverlayConfig, ScrollStrategy, OverlayRef } from '@angular/cdk/overlay';
 import { Portal, ComponentPortal } from '@angular/cdk/portal';
+
+export class OverlayDropdownRef {
+  constructor(private overlayRef: OverlayRef) {}
+
+  close() {
+    this.overlayRef.dispose();
+  }
+}
 
 @Injectable()
 export class PlayerOverlay {
-  private overlayRef: any;
-  public openDropdown(connected: ElementRef) {
-    if (this.overlayRef) {
-      this.close();
-      return;
-    }
 
-    const origin: OriginConnectionPosition = { originX: 'center', originY: 'top' };
-    const overlay: OverlayConnectionPosition = { overlayX: 'center', overlayY: 'top' };
+  constructor(private overlay: Overlay) { }
+
+  public openDropdown(connected: ElementRef, items: any[]) {
+    const origin: OriginConnectionPosition = { originX: 'start', originY: 'bottom' };
+    const overlay: OverlayConnectionPosition = { overlayX: 'start', overlayY: 'top' };
     const positionStrategy = this.overlay
       .position()
       .connectedTo(connected, origin, overlay);
@@ -25,12 +31,13 @@ export class PlayerOverlay {
       scrollStrategy
     });
 
-    this.overlayRef = this.overlay.create(config);
-
+    const overlayRef = this.overlay.create(config);
     const dropdownPortal = new ComponentPortal(DropdownOverlay);
 
-    this.overlayRef.attach(dropdownPortal);
-  }
+    const componentRef = overlayRef.attach(dropdownPortal);
 
-  constructor(private overlay: Overlay) { }
+    componentRef.instance.items = items;
+
+    return new OverlayDropdownRef(overlayRef);
+  }
 }

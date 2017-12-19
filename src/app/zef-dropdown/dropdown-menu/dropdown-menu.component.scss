@@ -1,0 +1,30 @@
+:host {
+  display: block;
+  font-family: 'Open Sans';
+
+  .zef-dropdown-menu {
+    border: 1px solid #DAE2E5;
+    background-color: #ffffff;
+
+    .z-item {
+      padding: 9px 16px;
+      height: 40px;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 22px;
+      color: #112539;
+      box-sizing: border-box;
+
+      & + .z-item {
+        border-top: 1px solid #E4E8EB;
+      }
+
+      &.selected,
+      &:hover {
+        background-color: #112539;
+        color: white;
+        cursor: pointer;
+      }
+    }
+  }
+}

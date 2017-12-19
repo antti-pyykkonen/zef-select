@@ -1,10 +1,9 @@
 import { PlayerOverlay } from './../player-overlay.service';
-import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 
 export interface ZefDropdownItem {
   id: string;
   name: string;
-  data: any;
 }
 
 @Component({
@@ -13,19 +12,46 @@ export interface ZefDropdownItem {
   styleUrls: ['./zef-dropdown.component.scss']
 })
 export class ZefDropdown implements OnInit {
+  public dropdownRef: any;
   public selected: ZefDropdownItem;
 
   @Input() items: ZefDropdownItem[];
   @Input() placeholder: string = 'Select an item';
   @Input() disabled: boolean = false;
+  isMenuOpen = false;
 
-  constructor(private overlay: PlayerOverlay, private elem: ElementRef) { }
+  @ViewChild('elem')
+  public element: ElementRef;
+
+  _positions = [
+    {
+      originX: 'start',
+      originY: 'top',
+      overlayX: 'start',
+      overlayY: 'top',
+    },
+    {
+      originX: 'start',
+      originY: 'bottom',
+      overlayX: 'start',
+      overlayY: 'bottom',
+    },
+  ];
+
+
+  constructor(private overlay: PlayerOverlay) { }
 
   ngOnInit() {
   }
 
   onOpenDropdown() {
-    this.overlay.openDropdown(this.elem);
+    this.isMenuOpen = !this.isMenuOpen;
+    // if (!this.dropdownRef) {
+    //   this.dropdownRef = this.overlay.openDropdown(this.elem, this.items);
+    // } else {
+    //   this.dropdownRef.close();
+    //   this.dropdownRef = null;
+    // }
   }
 
 }
