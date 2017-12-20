@@ -1,5 +1,5 @@
 import { PlayerOverlay } from './../player-overlay.service';
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ElementRef, ViewChild, SimpleChanges, EventEmitter, Output } from '@angular/core';
 
 export interface ZefDropdownItem {
   value: string;
@@ -11,13 +11,14 @@ export interface ZefDropdownItem {
   templateUrl: './zef-dropdown.component.html',
   styleUrls: ['./zef-dropdown.component.scss']
 })
-export class ZefDropdown implements OnInit {
-  public selectedId: any;
+export class ZefDropdown implements OnInit, OnChanges {
+  public selectedItem: ZefDropdownItem;
+  public filter: string;
 
-  public dropdownRef: any;
-  public selected: ZefDropdownItem;
+  @Input()  items: ZefDropdownItem[];
+  @Input()  value: any;
 
-  @Input() items: ZefDropdownItem[];
+  @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() placeholder: string = 'Select an item';
   @Input() disabled: boolean = false;
@@ -26,6 +27,8 @@ export class ZefDropdown implements OnInit {
 
   @ViewChild('elem')
   public element: ElementRef;
+  @ViewChild('filterInput')
+  public filterElement: ElementRef;
 
   _positions = [
     {
@@ -42,38 +45,37 @@ export class ZefDropdown implements OnInit {
     },
   ];
 
-  public _value;
+  constructor(private overlay: PlayerOverlay) { }
 
-  @Input() set value(value: string|ZefDropdownItem) {
-    this.selectedId = value;
-
-    if (value instanceof Object) {
-      this._value = value;
-    } else {
-      const item = this.items.find(x => x.value === this._value);
-      this._value = item;
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['value']) {
+      const curValue = changes['value'].currentValue;
+      if (curValue && this.items) {
+        this.selectedItem = this.items.find(item => item.value === curValue);
+      }
     }
   }
-
-  get(): ZefDropdownItem {
-    const item = this.items.find(x => x.value === this._value);
-    return item;
-  }
-
-
-  constructor(private overlay: PlayerOverlay) { }
 
   ngOnInit() {
   }
 
-  onOpenDropdown() {
-    this.isMenuOpen = !this.isMenuOpen;
-    // if (!this.dropdownRef) {
-    //   this.dropdownRef = this.overlay.openDropdown(this.elem, this.items);
-    // } else {
-    //   this.dropdownRef.close();
-    //   this.dropdownRef = null;
-    // }
+  public clear() {
+    this.isMenuOpen = false;
+    this.filter = null;
   }
 
+
+  public onDropdownShow() {
+    this.isMenuOpen = !this.isMenuOpen;
+
+    setTimeout(() => {
+      this.filterElement.nativeElement.focus();
+    });
+  }
+
+  public onDropdownSelect(newValue: any) {
+    this.isMenuOpen = false;
+    this.value = newValue;
+    this.valueChange.emit(this.value);
+  }
 }

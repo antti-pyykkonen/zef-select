@@ -1,6 +1,12 @@
-<div class="zef-dropdown-container" [class.z-disabled]="disabled" fxLayout="row" (click)="isMenuOpen = !isMenuOpen" #overlayOrigin="cdkOverlayOrigin" cdkOverlayOrigin #elem>
-  <div class="z-dropdown-placeholder" [class.z-no-selection]="!selected" fxFlex>{{ selected?.name || placeholder }}</div>
-  <div class="z-dropdown-caret">▾</div>
+<div class="zef-dropdown-container" [class.z-disabled]="disabled" fxLayout="row" (click)="onDropdownShow()" #overlayOrigin="cdkOverlayOrigin" cdkOverlayOrigin #elem>
+  <ng-container *ngIf="!isMenuOpen">
+    <div class="z-dropdown-placeholder" [class.z-no-selection]="!selected" fxFlex>{{ selectedItem?.name || placeholder }}</div>
+    <div class="z-dropdown-caret">▾</div>
+  </ng-container>
+
+  <ng-container *ngIf="isMenuOpen">
+      <input type="text" autofocus [ngModel]="filter" (ngModelChange)="filter = $event;" #filterInput />
+    </ng-container>
 </div>
 
 <ng-template cdkConnectedOverlay
@@ -9,6 +15,6 @@
 [cdkConnectedOverlayWidth]="element?.nativeElement?.offsetWidth"
 [cdkConnectedOverlayHasBackdrop]="true"
 [cdkConnectedOverlayBackdropClass]="'noop'"
-(backdropClick)="isMenuOpen = false">
-  <dropdown-menu [items]="items" [selected]="selectedId" (select)="isMenuOpen = false" [selected]="selected"></dropdown-menu>
+(backdropClick)="clear()">
+  <dropdown-menu [items]="items" [selected]="value" [filter]="filter" (select)="onDropdownSelect($event)"></dropdown-menu>
 </ng-template>

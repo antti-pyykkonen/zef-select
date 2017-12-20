@@ -1,6 +1,10 @@
 import { PlayerOverlay } from './player-overlay.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { OverlayModule } from '@angular/cdk/overlay';
 
@@ -19,7 +23,9 @@ import { DropdownMenu } from './zef-dropdown/dropdown-menu/dropdown-menu.compone
   imports: [
     BrowserModule,
     FlexLayoutModule,
-    OverlayModule
+    OverlayModule,
+    PerfectScrollbarModule,
+    FormsModule
   ],
   providers: [
     PlayerOverlay

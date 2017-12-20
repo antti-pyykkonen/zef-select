@@ -8,8 +8,14 @@ import { OverlayOrigin } from '@angular/cdk/overlay';
   styleUrls: ['./dropdown-menu.component.scss']
 })
 export class DropdownMenu implements OnInit {
-  @Input() items: ZefDropdownItem[];
+  public filteredItems: ZefDropdownItem[] = [];
+  public allItems: ZefDropdownItem[] = [];
+
+  public showItems: ZefDropdownItem[] = [];
+
+  @Input() items: ZefDropdownItem[] = [];
   @Input() selected: string;
+  @Input() filter: string;
 
   @Input() menuOpen: boolean = false;
 
@@ -23,9 +29,23 @@ export class DropdownMenu implements OnInit {
   ngOnInit() {
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes) {
     if (this.overlayOrigin) {
       this.width = this.overlayOrigin.elementRef.nativeElement.offsetWidth;
+    }
+
+    if (changes['items']) {
+      const items = changes['items'].currentValue;
+      this.allItems = items;
+    }
+
+    if (changes['filter'] && this.allItems) {
+      const filter = changes['filter'].currentValue as string;
+      if (filter != null) {
+        this.filteredItems = this.allItems.filter(x => x.name.toUpperCase().includes(filter.toUpperCase()));
+      } else {
+        this.filteredItems = this.allItems;
+      }
     }
   }
 

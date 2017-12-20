@@ -9,9 +9,11 @@ export class AppComponent {
   title = 'app';
   isMenuOpen  = false;
 
+  public selected = 1;
+
   public items = [
-    {name: 'A', value: 1},
-    {name: 'B', value: 2},
+    {name: 'AA', value: 1},
+    {name: 'AB', value: 2},
     {name: 'C', value: 3},
     {name: 'D', value: 4},
     {name: 'E', value: 5},
@@ -22,4 +24,8 @@ export class AppComponent {
     {name: 'J', value: 10},
     {name: 'K', value: 11}
   ];
+
+  onChange(event) {
+    console.log(event);
+  }
 }
