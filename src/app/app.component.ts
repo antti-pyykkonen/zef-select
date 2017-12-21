@@ -10,6 +10,7 @@ export class AppComponent {
   isMenuOpen  = false;
 
   public selected = 1;
+  public value: any;
 
   public items = [
     {name: 'AA', value: 1},

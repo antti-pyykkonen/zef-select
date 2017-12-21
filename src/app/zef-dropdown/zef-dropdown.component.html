@@ -16,5 +16,5 @@
 [cdkConnectedOverlayHasBackdrop]="true"
 [cdkConnectedOverlayBackdropClass]="'noop'"
 (backdropClick)="clear()">
-  <dropdown-menu [items]="items" [selected]="value" [filter]="filter" (select)="onDropdownSelect($event)"></dropdown-menu>
+  <dropdown-menu [items]="items" [filter]="filter" (select)="onDropdownSelect($event)"></dropdown-menu>
 </ng-template>

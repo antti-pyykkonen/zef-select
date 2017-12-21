@@ -1,6 +1,6 @@
 <div class="zef-dropdown-menu" fxLayout="column">
-  <perfect-scrollbar style="max-height: 200px;">
-    <div class="z-item" *ngFor="let item of filteredItems" [class.selected]="item?.value === selected" (click)="select.emit(item?.value)">
+  <perfect-scrollbar style="max-height: 200px;" #scrollbar>
+    <div class="z-item" *ngFor="let item of filteredItems" [class.selected]="item?.value === selectedItem?.value" (click)="select.emit(item?.value)">
       <span>{{item?.name}}</span>
     </div>
   </perfect-scrollbar>

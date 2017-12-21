@@ -1,4 +1,3 @@
-import { PlayerOverlay } from './../player-overlay.service';
 import { Component, OnInit, OnChanges, Input, ElementRef, ViewChild, SimpleChanges, EventEmitter, Output } from '@angular/core';
 
 export interface ZefDropdownItem {
@@ -18,10 +17,11 @@ export class ZefDropdown implements OnInit, OnChanges {
   @Input()  items: ZefDropdownItem[];
   @Input()  value: any;
 
-  @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() placeholder: string = 'Select an item';
   @Input() disabled: boolean = false;
+
+  @Output() valueChange: EventEmitter<ZefDropdownItem> = new EventEmitter<ZefDropdownItem>();
 
   isMenuOpen = false;
 
@@ -45,13 +45,17 @@ export class ZefDropdown implements OnInit, OnChanges {
     },
   ];
 
-  constructor(private overlay: PlayerOverlay) { }
+  constructor() { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['value']) {
       const curValue = changes['value'].currentValue;
       if (curValue && this.items) {
-        this.selectedItem = this.items.find(item => item.value === curValue);
+        this.selectedItem = this.items.find(item => item.value === curValue) || null;
+      }
+
+      if (changes['value'].firstChange) {
+        this.valueChange.emit(this.selectedItem);
       }
     }
   }
@@ -76,6 +80,7 @@ export class ZefDropdown implements OnInit, OnChanges {
   public onDropdownSelect(newValue: any) {
     this.isMenuOpen = false;
     this.value = newValue;
-    this.valueChange.emit(this.value);
+    this.selectedItem = this.items.find(item => item.value === this.value) || null;
+    this.valueChange.emit(this.selectedItem);
   }
 }

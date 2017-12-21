@@ -1,5 +1,8 @@
 <div class="holder">
-  <zef-dropdown [items]="items" [(value)]="selected"></zef-dropdown>
+  <zef-dropdown [items]="items" [value]="selected" (valueChange)="value = $event;"></zef-dropdown>
 </div>
 
 
+<div>{{value | json}}</div>
+
+<button (click)="selected=123">Reset change</button>
