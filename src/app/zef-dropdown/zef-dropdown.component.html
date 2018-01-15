@@ -9,6 +9,8 @@
     </ng-container>
 </div>
 
+{{ isMenuOpen }}
+
 <ng-template cdkConnectedOverlay
 [cdkConnectedOverlayOrigin]="overlayOrigin"
 [cdkConnectedOverlayOpen]="isMenuOpen"
@@ -16,5 +18,5 @@
 [cdkConnectedOverlayHasBackdrop]="true"
 [cdkConnectedOverlayBackdropClass]="'noop'"
 (backdropClick)="clear()">
-  <dropdown-menu [items]="items" [filter]="filter" (select)="onDropdownSelect($event)"></dropdown-menu>
+  <dropdown-menu [items]="items" [selected]="selectedItem" [filter]="filter" (select)="onDropdownSelect($event)" (close)="clear()"></dropdown-menu>
 </ng-template>

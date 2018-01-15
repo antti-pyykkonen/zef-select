@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, ElementRef, ViewChild, SimpleChanges, EventEmitter, Output } from '@angular/core';
+import { Component, ChangeDetectorRef, OnChanges, Input, ElementRef, ViewChild, SimpleChanges, EventEmitter, Output } from '@angular/core';
 
 export interface ZefDropdownItem {
   value: string;
@@ -10,13 +10,12 @@ export interface ZefDropdownItem {
   templateUrl: './zef-dropdown.component.html',
   styleUrls: ['./zef-dropdown.component.scss']
 })
-export class ZefDropdown implements OnInit, OnChanges {
+export class ZefDropdown implements OnChanges {
   public selectedItem: ZefDropdownItem;
   public filter: string;
 
   @Input()  items: ZefDropdownItem[];
   @Input()  value: any;
-
 
   @Input() placeholder: string = 'Select an item';
   @Input() disabled: boolean = false;
@@ -45,7 +44,7 @@ export class ZefDropdown implements OnInit, OnChanges {
     },
   ];
 
-  constructor() { }
+  constructor(private cdRef: ChangeDetectorRef) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['value']) {
@@ -60,14 +59,10 @@ export class ZefDropdown implements OnInit, OnChanges {
     }
   }
 
-  ngOnInit() {
-  }
-
   public clear() {
     this.isMenuOpen = false;
     this.filter = null;
   }
-
 
   public onDropdownShow() {
     this.isMenuOpen = !this.isMenuOpen;
